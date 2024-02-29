@@ -57,5 +57,4 @@ void Inventory::displayItemDetails() const {
     cout << "Item Name: " << this->itemName << endl;
     cout << "Quantity: " << this->quantity << endl;
     cout << "Price: $" << this->price << endl;
-    cout << "---------------------------" << endl;
 }

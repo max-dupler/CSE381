@@ -26,18 +26,29 @@ void initializeInventory(std::vector<Inventory>& inv) {
 void displayInventory(std::vector<Inventory>& inv) {
     for (Inventory i : inv) {
         i.displayItemDetails();
+        cout << "---------------------------" << endl;
     }
 }
 
-void searchItem() {
+void searchItem(std::vector<Inventory>& inv) {
+    int id;
+    cout << "Enter the item ID to search for: ";
+    cin >> id;
+    for (Inventory i : inv) {
+        if (i.getItemID() == id) {
+            cout << "Item found! Details:" << endl;
+            i.displayItemDetails();
+            return;
+        }
+    }
+    cout << "Item " << id <<  " not found in the inventory." << endl;
+}
+
+void updateQuantity(std::vector<Inventory>& inv) {
     return;
 }
 
-void updateQuantity() {
-    return;
-}
-
-void updatePrice() {
+void updatePrice(std::vector<Inventory>& inv) {
     return;
 }
 
@@ -57,13 +68,13 @@ void Menu(std::vector<Inventory>& inv) {
             displayInventory(inv);
             break;
         case 2:
-            searchItem();
-            break;
+            searchItem(inv);
+            exit(0);
         case 3:
-            updateQuantity();
+            updateQuantity(inv);
             break;
         case 4:
-            updatePrice();
+            updatePrice(inv);
             break;
         case 0:
             exit(0);
