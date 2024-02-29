@@ -23,6 +23,16 @@ void initializeInventory(std::vector<Inventory>& inv) {
     inv[invSize - 1].setPrice(19.99);
 }
 
+bool searchID(std::vector<Inventory>& inv, int id, Inventory& item) {
+    for (Inventory i : inv) {
+        if (i.getItemID() == id) {
+            item = i;
+            return true;
+        }
+    }
+    return false;
+}
+
 void displayInventory(std::vector<Inventory>& inv) {
     for (Inventory i : inv) {
         i.displayItemDetails();
@@ -34,22 +44,48 @@ void searchItem(std::vector<Inventory>& inv) {
     int id;
     cout << "Enter the item ID to search for: ";
     cin >> id;
-    for (Inventory i : inv) {
-        if (i.getItemID() == id) {
-            cout << "Item found! Details:" << endl;
-            i.displayItemDetails();
-            return;
-        }
+    Inventory i;
+    if (searchID(inv, id, i)) {
+        cout << "Item found! Details:" << endl;
+        i.displayItemDetails();
     }
+    
     cout << "Item " << id <<  " not found in the inventory." << endl;
 }
 
 void updateQuantity(std::vector<Inventory>& inv) {
-    return;
+    int id;
+    cout << "Enter item ID to update quantity: ";
+    cin >> id;
+    Inventory i;
+    if (searchID(inv, id, i)) {
+        cout << "Current quantity is " << i.getQuantity() << endl;
+        cout << "Enter new quantity: ";
+        int newQty;
+        cin >> newQty;
+        i.setQuantity(newQty);
+        cout << "Quantity is now " << i.getQuantity() << endl;
+        return;
+    }
+    cout << "Invalid item ID.  Exiting program." << endl;
+
 }
 
 void updatePrice(std::vector<Inventory>& inv) {
-    return;
+    int id;
+    cout << "Enter item ID to update price: ";
+    cin >> id;
+    Inventory i;
+    if (searchID(inv, id, i)) {
+        cout << "Current price is " << i.getPrice();
+        cout << "Enter new price: ";
+        int newPrice;
+        cin >> newPrice;
+        i.setPrice(newPrice);
+        cout << "Price is now " << i.getPrice();
+        return;
+    }
+    cout << "Invalid item ID.  Exiting program." << endl;
 }
 
 void Menu(std::vector<Inventory>& inv) {

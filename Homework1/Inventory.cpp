@@ -8,7 +8,7 @@ using std::endl;
 
 
 Inventory::Inventory() {
-    itemID = 0;
+    itemID = -1;
     itemName = "";
     price = 0.0;
     quantity = 0;
