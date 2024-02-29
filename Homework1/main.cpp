@@ -1,4 +1,4 @@
-// Copyright 
+// Copyright Max Dupler 2024
 #include "Inventory.h"
 #include <string>
 #include <iostream>
@@ -23,21 +23,53 @@ void initializeInventory(std::vector<Inventory>& inv) {
     inv[invSize - 1].setPrice(19.99);
 }
 
-int Menu() {
+void displayInventory(std::vector<Inventory>& inv) {
+    for (Inventory i : inv) {
+        i.displayItemDetails();
+    }
+}
+
+void searchItem() {
+    return;
+}
+
+void updateQuantity() {
+    return;
+}
+
+void updatePrice() {
+    return;
+}
+
+void Menu(std::vector<Inventory>& inv) {
     std::cout << "Enter 1 to display the inventory\n"
         "Enter 2 to search for an item\n"
         "Enter 3 to update the quantity of an item\n"
         "Enter 4 to update the price of an item\n"
         "Enter 0 to exit the program\n"
         "Enter your choice: ";
+
     int choice;
     cin >> choice;
-    if (typeid(choice) == typeid(int) 
-        && choice >= 0 && choice <= 4) {
-            return choice;
-    } else {
-        cout << "Invalid choice:  Try again." << endl;
-        return Menu();
+
+    switch (choice) {
+        case 1:
+            displayInventory(inv);
+            break;
+        case 2:
+            searchItem();
+            break;
+        case 3:
+            updateQuantity();
+            break;
+        case 4:
+            updatePrice();
+            break;
+        case 0:
+            exit(0);
+        default:
+            cout << "Invalid choice:  Try again." << endl;
+            break;
     }
 }
 
@@ -47,9 +79,9 @@ int main() {
     // Add some items to the inventory
     initializeInventory(inventory);
 
-    int choice = Menu();
-
-    cout << choice << endl;
+    while (true) {
+        Menu(inventory);
+    }
 
     return 0;
 }

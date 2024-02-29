@@ -3,6 +3,9 @@
 #include <iostream>
 #include <string>
 
+using std::cout;
+using std::endl;
+
 
 Inventory::Inventory() {
     itemID = 0;
@@ -10,7 +13,8 @@ Inventory::Inventory() {
     price = 0.0;
     quantity = 0;
 }
-Inventory::Inventory(int id, const std::string& name, int qty, double itemPrice) {
+Inventory::Inventory(int id, const std::string& name,
+    int qty, double itemPrice) {
     this->itemID = id;
     this->itemName = name;
     this->quantity = qty;
@@ -29,7 +33,7 @@ const std::string& Inventory::getItemName() const {
     return this->itemName;
 }
 
-void Inventory::setItemName(const std::string& name){
+void Inventory::setItemName(const std::string& name) {
     this->itemName = name;
 }
 
@@ -49,5 +53,9 @@ void Inventory::setPrice(double itemPrice) {
 
 // Display item details
 void Inventory::displayItemDetails() const {
-    return;
+    cout << "Item ID: " << this->itemID << endl;
+    cout << "Item Name: " << this->itemName << endl;
+    cout << "Quantity: " << this->quantity << endl;
+    cout << "Price: $" << this->price << endl;
+    cout << "---------------------------" << endl;
 }
