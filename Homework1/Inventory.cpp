@@ -16,7 +16,8 @@ Inventory::Inventory() {
 }
 
 // Parameterized constructor for the Inventory class
-Inventory::Inventory(int id, const std::string& name, int qty, double itemPrice) {
+Inventory::Inventory(int id, const std::string& name,
+    int qty, double itemPrice) {
     this->itemID = id;          
     this->itemName = name;      
     this->quantity = qty;       
