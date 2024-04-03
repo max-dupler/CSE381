@@ -1,3 +1,4 @@
+// Copyright 2024 <Max Dupler>
 #include <iostream>
 
 using std::cout;
@@ -39,6 +40,6 @@ bool checkArguments(int argc, char *argv[]) {
 int main(int argc, char *argv[]) {
   if (!checkArguments(argc, argv)) {
     return 0;
-  }; 
+  }
   exit(0);
 }
