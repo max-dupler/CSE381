@@ -1,8 +1,10 @@
 // Copyright 2024 <Max Dupler>
 #include <iostream>
+#include <thread>
 
 using std::cout;
 using std::endl;
+using std::thread;
 
 bool isPrime(int n) {
   // 2 is the smallest prime number
@@ -25,6 +27,7 @@ bool isInteger(const std::string &s) {
     }
 }
 
+// Checks CLA and returns based on correct or incorrect usage
 bool checkArguments(int argc, char *argv[]) {
   if (argc != 3) {
     cout << "Usage: primesMT maxToCheck mode" << endl;
@@ -37,9 +40,29 @@ bool checkArguments(int argc, char *argv[]) {
   }
 }
 
+int serialPrimes(int maxCheck) {
+  int primes = 0;
+  for (int i = 0; i < maxCheck; i++) {
+    if (isPrime(i)) {
+      primes++;
+    }
+  }
+  return primes;
+}
+
+int inefficientPrimes(int maxCheck) {
+  
+}
+
 int main(int argc, char *argv[]) {
+  // check CLA
   if (!checkArguments(argc, argv)) {
     return 0;
   }
+
+  int numPrimes = serialPrimes(std::stoi(argv[1]));
+
+  cout << numPrimes << endl;
+
   exit(0);
 }
