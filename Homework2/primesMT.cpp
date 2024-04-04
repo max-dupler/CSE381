@@ -30,7 +30,7 @@ bool isInteger(const std::string &s) {
 // Checks CLA and returns based on correct or incorrect usage
 bool checkArguments(int argc, char *argv[]) {
   if (argc != 3) {
-    cout << "Usage: primesMT maxToCheck mode" << endl;
+    cout << "Usage:  primesMT maxToCheck mode" << endl;
     return false;
   } else if (!(isInteger(argv[1]) && isInteger(argv[2]))) {
     cout << "Error: arguments must be integers" << endl;
@@ -40,45 +40,46 @@ bool checkArguments(int argc, char *argv[]) {
   }
 }
 
-void serialPrimes(int maxCheck, int& numPrimes) {
+void serialPrimes(int maxCheck, int* numPrimes) {
   for (int i = 0; i < maxCheck; i++) {
     if (isPrime(i)) {
-      numPrimes++;
+      (*numPrimes)++;
     }
   }
 }
 
-void checkPairPrimes(int num1, int num2, int& numPrimes) {
-  if (isPrime(num1)) numPrimes++;
-  if (isPrime(num2)) numPrimes++;
+void checkPairPrimes(int num1, int num2, int* numPrimes) {
+  if (isPrime(num1)) (*numPrimes)++;
+  if (isPrime(num2)) (*numPrimes)++;
 }
 
-void inefficientPrimes(int maxCheck, int& numPrimes) {
-  int numPrimes2 = 0;
-  for (int i = 0; i < maxCheck; i = i + 4) {
-    thread pair1(checkPairPrimes, i, i + 1, std::ref(numPrimes));
-    thread pair2(checkPairPrimes, i + 2, i + 3, std::ref(numPrimes2));
+void inefficientPrimes(int maxCheck, int* numPrimes) {
+  cout << "starting inefficient prime check" << endl;
+  for (int i = 0; i < maxCheck; i += 4) {
+    int numPrimes2 = 0;
+    thread pair1(checkPairPrimes, i, i + 1, numPrimes);
+    thread pair2(checkPairPrimes, i + 2, i + 3, &numPrimes2);
     pair1.join();
     pair2.join();
-    numPrimes += numPrimes2;
+    (*numPrimes) += numPrimes2;
   }
 }
-void checkEfficientPrimes(int maxCheck, int num1, int num2, int& numPrimes) {
+void checkEfficientPrimes(int maxCheck, int num1, int num2, int* numPrimes) {
   while (num1 < maxCheck && num2 <= maxCheck) {
-    if (isPrime(num1)) numPrimes++;
-    if (isPrime(num2)) numPrimes++;
+    if (isPrime(num1)) (*numPrimes)++;
+    if (isPrime(num2)) (*numPrimes)++;
     num1 += 4;
     num2 += 4;
   }
 }
 
-void efficientPrimes(int maxCheck, int& numPrimes) {
+void efficientPrimes(int maxCheck, int* numPrimes) {
   int numPrimes2 = 0;
-  thread pair1(checkEfficientPrimes, maxCheck, 0, 1, std::ref(numPrimes));
-  thread pair2(checkEfficientPrimes, maxCheck, 2, 3, std::ref(numPrimes2));
+  thread pair1(checkEfficientPrimes, maxCheck, 0, 1, numPrimes);
+  thread pair2(checkEfficientPrimes, maxCheck, 2, 3, &numPrimes2);
   pair1.join();
   pair2.join();
-  numPrimes += numPrimes2;
+  *numPrimes += numPrimes2;
 }
 
 int main(int argc, char *argv[]) {
@@ -91,18 +92,19 @@ int main(int argc, char *argv[]) {
 
   switch (std::stoi(argv[2])) {
     case 0:
-      serialPrimes(std::stoi(argv[1]), numPrimes);
+      serialPrimes(std::stoi(argv[1]), &numPrimes);
       break;
     case 1:
-      inefficientPrimes(std::stoi(argv[1]), numPrimes);
+      inefficientPrimes(std::stoi(argv[1]), &numPrimes);
       break;
     case 2:
-      efficientPrimes(std::stoi(argv[1]), numPrimes);
+      efficientPrimes(std::stoi(argv[1]), &numPrimes);
       break;
   }
 
 
-  cout << "Found " << numPrimes << " prime numbers < " << std::stoi(argv[1]) << endl;
+  cout << "Found " << numPrimes << " prime numbers < "
+    << std::stoi(argv[1]) << endl;
 
   exit(0);
 }
