@@ -54,7 +54,6 @@ void checkPairPrimes(int num1, int num2, int* numPrimes) {
 }
 
 void inefficientPrimes(int maxCheck, int* numPrimes) {
-  cout << "starting inefficient prime check" << endl;
   for (int i = 0; i < maxCheck; i += 4) {
     int numPrimes2 = 0;
     thread pair1(checkPairPrimes, i, i + 1, numPrimes);
